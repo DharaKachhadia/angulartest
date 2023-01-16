@@ -1,0 +1,50 @@
+<section class="home-section">
+  <div class="table-container">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <!-- title Column -->
+      <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef>Title</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.attributes.title }} ({{ element.attributes.abbreviation }})
+        </td>
+      </ng-container>
+
+      <!-- website Column -->
+      <ng-container matColumnDef="website">
+        <th mat-header-cell *matHeaderCellDef>website</th>
+        <td mat-cell *matCellDef="let element">
+          <a href="{{ element.attributes.website?.uri }}" target="_blank"
+            >{{ element.attributes.website?.uri }}
+          </a>
+        </td>
+      </ng-container>
+
+      <!-- Address Column -->
+      <ng-container matColumnDef="submission_address">
+        <th mat-header-cell *matHeaderCellDef>Address</th>
+        <td mat-cell *matCellDef="let element">
+          <p>
+            "{{ element.attributes.submission_address.address_line1 }},{{
+              element.attributes.submission_address.address_line2
+            }},{{ element.attributes.submission_address.locality }},{{
+              element.attributes.submission_address.administrative_area
+            }}
+            {{ element.attributes.submission_address.postal_code }},{{
+              element.attributes.submission_address.country_code
+            }}"
+          </p>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayColumns"></tr>
+    </table>
+    <!-- <mat-paginator
+    [pageSizeOptions]="[5, 10, 20]"
+    showFirstLastButtons
+    aria-label="Select page of periodic elements"
+  >
+  </mat-paginator> -->
+  </div>
+  <button>next</button>
+</section>
