@@ -1,22 +1,33 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
-export class HomeComponent {
+export class HomeComponent implements AfterViewInit {
   public getJsonValue: any;
-  public displayColumns: string[] = ['title', 'website', 'submission_address'];
+  public displayColumns: string[] = [
+    'title',
+    'website',
+    'submission_address',
+    'details',
+  ];
   public dataSource: any = [];
+
   counter: number = 0;
   isLoading: boolean = true;
   constructor(private http: HttpClient) {}
 
-  ngOnInit(): void {
+  @ViewChild(MatPaginatorModule) paginator: MatPaginatorModule | undefined;
+
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
     this.getMethod(this.counter);
   }
+
   public getMethod(offset: number) {
     this.isLoading = true;
     this.http
@@ -25,6 +36,7 @@ export class HomeComponent {
       )
       .subscribe((data: any) => {
         console.log(data.data);
+        console.log(data);
         this.getJsonValue = data.data;
         this.dataSource = data.data;
         this.isLoading = false;
